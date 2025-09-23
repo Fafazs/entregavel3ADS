@@ -21,6 +21,22 @@ app.post('/pessoa' , (req,res)=>{
     res.send({mensagem: `Olá ${pessoa.nome} seu Post deu certo! Você possui ${pessoa.idade} anos de idade!`});
 })
 
+app.post('/somar', (req,res)=>{
+    const body = req.body;
+    const soma = body.a + body.b;
+    res.send(`A soma de ${body.a} e ${body.b} é: ${soma}`);
+})
+app.post('/multiplicar', (req,res)=>{
+    const body = req.body;
+    const multi = body.a * body.b;
+    res.send(`A multiplicação de ${body.a} e ${body.b} é: ${multi}`);
+})
+app.post('/dividir', (req,res)=>{
+    const body = req.body;
+    const div = body.a / body.b;
+    res.send(`A divisão de ${body.a} e ${body.b} é: ${div}`);
+})
+
 //Iniciando server
 app.listen(port, (error)=>{
   if(error){
