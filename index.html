@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Login</title>
+</head>
+<body>
+    <h1>Post Pessoa Teste</h1>
+    <form id="form">
+        <label for="nome">Nome</label>
+        <input 
+        id="nome" 
+        type="text" 
+        pattern="^[A-Za-zÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇáàâãéèêíïóôõöúç\s'-]+$" 
+        oninput="this.value = this.value.replace(/[^A-Za-zÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇáàâãéèêíïóôõöúç\s'-]/g, '')"
+        required>
+        <label for="idade">Idade</label>
+        <input 
+        id="idade" 
+        type="number" 
+        pattern="^\d+$" 
+        oninput="this.value = this.value.replace(/[^0-9]/g, '')" 
+        required>
+        <button type="submit">Enviar</button>
+    </form>
+
+    <script>
+      const form = document.getElementById("form");
+
+      form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const nome = document.getElementById('nome').value;
+      const idade = document.getElementById('idade').value;
+
+      try {
+        const resposta = await fetch('http://localhost:3938/pessoa', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({nome,idade})
+        });
+        
+        const dados = await resposta.json();
+        alert(dados.mensagem);
+        nome.value = "";
+        idade.value = "";
+      } catch (erro) {
+        console.error('Erro na requisição:', erro);
+        alert('Erro ao fazer login.');
+      }
+    });
+    </script>
+    
+</body>
+</html>
