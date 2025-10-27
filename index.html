@@ -71,6 +71,7 @@
     </div>
 
     <script>
+        const API_URL = window.location.origin;
         // --- FUNÇÃO POST GENÉRICA ---
         async function enviarFormulario(url, dados, idLista) {
         try {
@@ -98,7 +99,7 @@
         e.preventDefault();
         const nome = document.getElementById('nome').value;
         const idade = document.getElementById('idade').value;
-        enviarFormulario('http://localhost:3000/pessoa', {nome, idade}, 'resultadoPessoa');
+        enviarFormulario(`http://${API_URL}/pessoa`, {nome, idade}, 'resultadoPessoa');
         document.getElementById('nome').value = '';
         document.getElementById('idade').value = '';
     });
@@ -108,7 +109,7 @@
         e.preventDefault();
         const num1 = Number(document.getElementById('num1Somar').value);
         const num2 = Number(document.getElementById('num2Somar').value);
-        enviarFormulario('http://localhost:3000/somar', {num1, num2}, 'resultadoSomar');
+        enviarFormulario(`http://${API_URL}/somar`, {num1, num2}, 'resultadoSomar');
         document.getElementById('num1Somar').value = '';
         document.getElementById('num2Somar').value = '';
     });
@@ -118,7 +119,7 @@
         e.preventDefault();
         const num1 = Number(document.getElementById('num1Multiplicar').value);
         const num2 = Number(document.getElementById('num2Multiplicar').value);
-        enviarFormulario('http://localhost:3000/multiplicar', {num1, num2}, 'resultadoMultiplicar');
+        enviarFormulario(`http://${API_URL}/multiplicar`, {num1, num2}, 'resultadoMultiplicar');
         document.getElementById('num1Multiplicar').value = '';
         document.getElementById('num2Multiplicar').value = '';
     });
@@ -128,7 +129,7 @@
         e.preventDefault();
         const num1 = Number(document.getElementById('num1Dividir').value);
         const num2 = Number(document.getElementById('num2Dividir').value);
-        enviarFormulario('http://localhost:3000/dividir', {num1, num2}, 'resultadoDividir');
+        enviarFormulario(`http://${API_URL}/dividir`, {num1, num2}, 'resultadoDividir');
         document.getElementById('num1Dividir').value = '';
         document.getElementById('num2Dividir').value = '';
     });
