@@ -7,10 +7,11 @@ const port = 3938;
 app.use(express.json());
 app.use(cors());
 
+
 //rotas
-app.get('/', (req,res)=>{
-    res.send('<h1>Rota raiz do servidor express</h1>')
-})
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'index.html'));
+});
 
 app.post('/pessoa' , (req,res)=>{
     const pessoa = req.body;
