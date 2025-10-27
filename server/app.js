@@ -23,18 +23,18 @@ app.post('/pessoa' , (req,res)=>{
 
 app.post('/somar', (req,res)=>{
     const body = req.body;
-    const soma = body.a + body.b;
-    res.send(`A soma de ${body.a} e ${body.b} é: ${soma}`);
+    const soma = body.num1 + body.num2;
+    res.send({resultado: `A soma de ${body.num1} e ${body.num2} é: ${soma}`});
 })
 app.post('/multiplicar', (req,res)=>{
     const body = req.body;
-    const multi = body.a * body.b;
-    res.send(`A multiplicação de ${body.a} e ${body.b} é: ${multi}`);
+    const multi = body.num1 * body.num2;
+    res.send({resultado: `A multiplicação de ${body.num1} e ${body.num2} é: ${multi}`});
 })
 app.post('/dividir', (req,res)=>{
     const body = req.body;
-    const div = body.a / body.b;
-    res.send(`A divisão de ${body.a} e ${body.b} é: ${div}`);
+    const div = body.num1 / body.num2;
+    res.send({resultado:`A divisão de ${body.num1} e ${body.num2} é: ${div}`});
 })
 
 //Iniciando server

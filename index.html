@@ -1,58 +1,137 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Login</title>
+    <title>Formulários Matemáticos</title>
 </head>
 <body>
-    <h1>Post Pessoa Teste</h1>
-    <form id="form">
-        <label for="nome">Nome</label>
-        <input 
-        id="nome" 
-        type="text" 
-        pattern="^[A-Za-zÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇáàâãéèêíïóôõöúç\s'-]+$" 
-        oninput="this.value = this.value.replace(/[^A-Za-zÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇáàâãéèêíïóôõöúç\s'-]/g, '')"
-        required>
-        <label for="idade">Idade</label>
-        <input 
-        id="idade" 
-        type="number" 
-        pattern="^\d+$" 
-        oninput="this.value = this.value.replace(/[^0-9]/g, '')" 
-        required>
-        <button type="submit">Enviar</button>
-    </form>
+    <!-- FORM PESSOA -->
+    <div id="pessoaSection">
+        <h1>Post Pessoa</h1>
+        <form id="formPessoa">
+            <label for="nome">Nome</label>
+            <input 
+                id="nome" 
+                type="text" 
+                pattern="^[A-Za-zÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇáàâãéèêíïóôõöúç\s'-]+$" 
+                oninput="this.value = this.value.replace(/[^A-Za-zÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇáàâãéèêíïóôõöúç\s'-]/g, '')"
+                required>
+            
+            <label for="idade">Idade</label>
+            <input 
+                id="idade" 
+                type="number" 
+                pattern="^\d+$" 
+                oninput="this.value = this.value.replace(/[^0-9]/g, '')" 
+                required>
+            
+            <button type="submit">Enviar</button>
+        </form>
+        <ul id="resultadoPessoa"></ul>
+    </div>
+
+    <hr>
+
+    <!-- FORM SOMAR -->
+    <div id="somarSection">
+        <h1>Somar</h1>
+        <form id="formSomar">
+            <input id="num1Somar" type="number" placeholder="Número 1" required>
+            <input id="num2Somar" type="number" placeholder="Número 2" required>
+            <button type="submit">Somar</button>
+        </form>
+        <ul id="resultadoSomar"></ul>
+    </div>
+
+    <hr>
+
+    <!-- FORM MULTIPLICAR -->
+    <div id="multiplicarSection">
+        <h1>Multiplicar</h1>
+        <form id="formMultiplicar">
+            <input id="num1Multiplicar" type="number" placeholder="Número 1" required>
+            <input id="num2Multiplicar" type="number" placeholder="Número 2" required>
+            <button type="submit">Multiplicar</button>
+        </form>
+        <ul id="resultadoMultiplicar"></ul>
+    </div>
+
+    <hr>
+
+    <!-- FORM DIVIDIR -->
+    <div id="dividirSection">
+        <h1>Dividir</h1>
+        <form id="formDividir">
+            <input id="num1Dividir" type="number" placeholder="Número 1" required>
+            <input id="num2Dividir" type="number" placeholder="Número 2" required>
+            <button type="submit">Dividir</button>
+        </form>
+        <ul id="resultadoDividir"></ul>
+    </div>
 
     <script>
-      const form = document.getElementById("form");
+        // --- FUNÇÃO POST GENÉRICA ---
+        async function enviarFormulario(url, dados, idLista) {
+        try {
+            const resposta = await fetch(url, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(dados)
+            });
+            const resultado = await resposta.json();
 
-      form.addEventListener('submit', async (e) => {
-      e.preventDefault();
+            // Cria um li e adiciona à UL correta
+            const ul = document.getElementById(idLista);
+            const li = document.createElement('li');
+            li.textContent = resultado.mensagem || resultado.resultado;
+            ul.appendChild(li);
 
-      const nome = document.getElementById('nome').value;
-      const idade = document.getElementById('idade').value;
+        } catch (erro) {
+            console.error('Erro na requisição:', erro);
+            alert('Erro ao enviar formulário.');
+        }
+    }
 
-      try {
-        const resposta = await fetch('http://localhost:3938/pessoa', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({nome,idade})
-        });
-        
-        const dados = await resposta.json();
-        alert(dados.mensagem);
-        nome.value = "";
-        idade.value = "";
-      } catch (erro) {
-        console.error('Erro na requisição:', erro);
-        alert('Erro ao fazer login.');
-      }
+    // --- FORM PESSOA ---
+    document.getElementById('formPessoa').addEventListener('submit', e => {
+        e.preventDefault();
+        const nome = document.getElementById('nome').value;
+        const idade = document.getElementById('idade').value;
+        enviarFormulario('http://localhost:3938/pessoa', {nome, idade}, 'resultadoPessoa');
+        document.getElementById('nome').value = '';
+        document.getElementById('idade').value = '';
+    });
+
+    // --- FORM SOMAR ---
+    document.getElementById('formSomar').addEventListener('submit', e => {
+        e.preventDefault();
+        const num1 = Number(document.getElementById('num1Somar').value);
+        const num2 = Number(document.getElementById('num2Somar').value);
+        enviarFormulario('http://localhost:3938/somar', {num1, num2}, 'resultadoSomar');
+        document.getElementById('num1Somar').value = '';
+        document.getElementById('num2Somar').value = '';
+    });
+
+    // --- FORM MULTIPLICAR ---
+    document.getElementById('formMultiplicar').addEventListener('submit', e => {
+        e.preventDefault();
+        const num1 = Number(document.getElementById('num1Multiplicar').value);
+        const num2 = Number(document.getElementById('num2Multiplicar').value);
+        enviarFormulario('http://localhost:3938/multiplicar', {num1, num2}, 'resultadoMultiplicar');
+        document.getElementById('num1Multiplicar').value = '';
+        document.getElementById('num2Multiplicar').value = '';
+    });
+
+    // --- FORM DIVIDIR ---
+    document.getElementById('formDividir').addEventListener('submit', e => {
+        e.preventDefault();
+        const num1 = Number(document.getElementById('num1Dividir').value);
+        const num2 = Number(document.getElementById('num2Dividir').value);
+        enviarFormulario('http://localhost:3938/dividir', {num1, num2}, 'resultadoDividir');
+        document.getElementById('num1Dividir').value = '';
+        document.getElementById('num2Dividir').value = '';
     });
     </script>
-    
 </body>
 </html>
