@@ -1,19 +1,25 @@
+// Importações
 const express = require('express');
-const app = express();
-const path = require('path');
 const cors = require('cors');
-const port = process.env.PORT || 3000;
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const path = require('path');
 
-// Middleware para parsear JSON
+// Cria app e define porta
+const app = express();
+const port = process.env.PORT || 3000;
+
+// 🔧 Corrige __dirname para ambiente CommonJS (Node no Railway)
+const __dirname = path.resolve();
+
+// Middlewares
 app.use(express.json());
 app.use(cors());
 
+// Serve arquivos estáticos (HTML, CSS, JS)
 app.use(express.static(__dirname));
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+// Rota principal (serve o index.html)
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.post('/pessoa' , (req,res)=>{
