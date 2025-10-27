@@ -7,9 +7,6 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// 🔧 Corrige __dirname para ambiente CommonJS (Node no Railway)
-const __dirname = path.resolve();
-
 // Middlewares
 app.use(express.json());
 app.use(cors());
