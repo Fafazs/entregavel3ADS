@@ -3,15 +3,17 @@ const app = express();
 const path = require('path');
 const cors = require('cors');
 const port = process.env.PORT || 3000;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Middleware para parsear JSON
 app.use(express.json());
 app.use(cors());
 
-app.use(express.static(path.join(__dirname, '..')));
-//rotas
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'index.html'));
+app.use(express.static(__dirname));
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
 app.post('/pessoa' , (req,res)=>{
