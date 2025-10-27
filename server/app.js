@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 const cors = require('cors');
 const port = 3000;
 
@@ -39,7 +40,7 @@ app.post('/dividir', (req,res)=>{
 })
 
 //Iniciando server
-app.listen(port, (error)=>{
+app.listen(port, '0.0.0.0', (error)=>{
   if(error){
     console.log(`Servidor nao inicou por conta do error ${error}`);
   }else{
